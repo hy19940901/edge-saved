@@ -1,27 +1,14 @@
+import * as React from "react";
 import {
-  isRouteErrorResponse,
   Links,
   Meta,
   Outlet,
   Scripts,
   ScrollRestoration,
+  Link,
+  isRouteErrorResponse,
+  useRouteError,
 } from "react-router";
-
-import type { Route } from "./+types/root";
-import "./app.css";
-
-export const links: Route.LinksFunction = () => [
-  { rel: "preconnect", href: "https://fonts.googleapis.com" },
-  {
-    rel: "preconnect",
-    href: "https://fonts.gstatic.com",
-    crossOrigin: "anonymous",
-  },
-  {
-    rel: "stylesheet",
-    href: "https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap",
-  },
-];
 
 export function Layout({ children }: { children: React.ReactNode }) {
   return (
@@ -32,7 +19,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
         <Meta />
         <Links />
       </head>
-      <body>
+      <body style={{ margin: 24, fontFamily: "Times New Roman, serif" }}>
         {children}
         <ScrollRestoration />
         <Scripts />
@@ -42,34 +29,41 @@ export function Layout({ children }: { children: React.ReactNode }) {
 }
 
 export default function App() {
-  return <Outlet />;
+  return (
+    <div style={{ maxWidth: 920, margin: "0 auto" }}>
+      <header style={{ display: "flex", alignItems: "baseline", gap: 16, marginBottom: 16 }}>
+        <h1 style={{ margin: 0 }}>Edge Saved</h1>
+        <nav style={{ display: "flex", gap: 12 }}>
+          <Link to="/">Home</Link>
+          <Link to="/saved">Saved</Link>
+        </nav>
+      </header>
+
+      <Outlet />
+    </div>
+  );
 }
 
-export function ErrorBoundary({ error }: Route.ErrorBoundaryProps) {
-  let message = "Oops!";
-  let details = "An unexpected error occurred.";
-  let stack: string | undefined;
+export function ErrorBoundary() {
+  const err = useRouteError();
 
-  if (isRouteErrorResponse(error)) {
-    message = error.status === 404 ? "404" : "Error";
-    details =
-      error.status === 404
-        ? "The requested page could not be found."
-        : error.statusText || details;
-  } else if (import.meta.env.DEV && error && error instanceof Error) {
-    details = error.message;
-    stack = error.stack;
+  let title = "Something went wrong";
+  let detail = "An unexpected error occurred.";
+
+  if (isRouteErrorResponse(err)) {
+    title = `Error ${err.status}`;
+    detail = typeof err.data === "string" ? err.data : err.statusText;
+  } else if (err instanceof Error) {
+    detail = err.message;
   }
 
   return (
-    <main className="pt-16 p-4 container mx-auto">
-      <h1>{message}</h1>
-      <p>{details}</p>
-      {stack && (
-        <pre className="w-full p-4 overflow-x-auto">
-          <code>{stack}</code>
-        </pre>
-      )}
-    </main>
+    <div style={{ border: "1px solid #ccc", borderRadius: 10, padding: 16 }}>
+      <h2 style={{ marginTop: 0 }}>{title}</h2>
+      <p style={{ whiteSpace: "pre-wrap" }}>{detail}</p>
+      <p>
+        <Link to="/">Back to Home</Link>
+      </p>
+    </div>
   );
 }

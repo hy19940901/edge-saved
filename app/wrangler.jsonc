@@ -8,7 +8,8 @@
 	"compatibility_date": "2025-04-04",
 	"main": "./workers/app.ts",
 	"vars": {
-		"VALUE_FROM_CLOUDFLARE": "Hello from Cloudflare"
+		"VALUE_FROM_CLOUDFLARE": "Hello from Cloudflare",
+		"APP_SECRET": "edge-saved-demo-secret-2025-please-replace-with-a-long-random-string-64+chars"
 	},
 	"observability": {
 		"enabled": true
