@@ -1,0 +1,68 @@
+# =========================
+# OS / Editor
+# =========================
+.DS_Store
+.DS_Store?
+Thumbs.db
+
+# VS Code
+.vscode/
+!.vscode/extensions.json
+
+# JetBrains
+.idea/
+
+# =========================
+# Node / npm
+# =========================
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# =========================
+# Build Outputs
+# =========================
+dist/
+build/
+.cache/
+.tmp/
+
+# React Router / Vite
+.vite/
+
+# =========================
+# Cloudflare / Wrangler
+# =========================
+.wrangler/
+.dev.vars
+.env
+.env.*
+!.env.example
+
+# =========================
+# Logs
+# =========================
+logs/
+*.log
+
+# =========================
+# Test / Coverage
+# =========================
+coverage/
+.nyc_output/
+
+# =========================
+# Docs (optional)
+# =========================
+# Uncomment if you decide NOT to commit generated PDFs
+# *.pdf
+# *.docx
+
+# =========================
+# Misc
+# =========================
+*.swp
+*.swo
+*~
